@@ -38,7 +38,8 @@ Authors: David Fisher and Riley Callahan.
 #     600 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
 #     700 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
 #     800 degrees / second  -->  traveled XXX inches  -->  YYY inches / second
-#     900 degrees / second  -->  traveled XXX inches  -->  YYY inches / second (probably no faster than 800)
+#     900 degrees / second  -->  traveled XXX inches  -->  YYY inches /
+# second (probably no faster than 800)
 #
 # TODO: 3. Make an equation
 #   Derive from that information a way to convert a given degrees per second speed into an inches / second speed.
