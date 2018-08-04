@@ -15,7 +15,8 @@ Authors: David Fisher and Riley Callahan.
 #     ev3.Sound.speak("Turn degrees").wait()
 #   You will need to modify that code for this problem, but it is a handy starting point.
 
-# TODO: 3. Create a method in your library called turn_degrees that receives the degrees_to_turn and turn_speed_sp
+# Done: 3. Create a method in your library called turn_degrees that receives
+# the degrees_to_turn and turn_speed_sp
 #   To help you get started here is a potential method signature line that will be in your library.
 #
 #   def turn_degrees(self, degrees_to_turn, turn_speed_sp):
@@ -32,13 +33,15 @@ Authors: David Fisher and Riley Callahan.
 #     Use the run_to_rel_pos, .wait_while(ev3.Motor.STATE_RUNNING) pattern to implement your work (not timed driving)
 #   You will have to experimentally determine the formula for accurate position_sp turn amounts.
 
-# TODO: 4. Individually implement the code here to use your turn_degrees library method.
+# Done: 4. Individually implement the code here to use your turn_degrees
+# library method.
 #   Modify the code to ask the user how many degrees they would like to turn
 #   Ask the user what speed they would like to use for the turn (0 to 900 degrees per second).
 #   Beep after the turn is complete via a beep in this module (tests to make sure the library is blocking)
 #   When the library method is complete have all team members VCS update and test using their own m4_turn_degrees.py
 
-# TODO: 5. Formally test your work. When you think you have the problem complete run these tests:
+# Done: 5. Formally test your work. When you think you have the problem
+# complete run these tests:
 #     45 degrees turns left 45 degrees
 #    -45 degrees turn right 45 degrees putting you back where you started
 #     90 degrees turns left 90 degrees
@@ -48,7 +51,8 @@ Authors: David Fisher and Riley Callahan.
 #    360 degrees
 # Add more tests as you see fit.  Ideally you should be within 45 degrees of back where you started (if you can).
 
-# TODO: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
+# Done: 6. Call over a TA or instructor to sign your team's checkoff sheet and
+# do a code review.
 #
 # Observations you should make, using run_to_rel_pos is useful for accurate turns, but testing takes time.
 
@@ -69,14 +73,14 @@ def main():
     robot = robo.Snatch3r()
 
     while True:
-        speed_deg_per_second = int(input("Speed (0 to 900 dps): "))
-        if speed_deg_per_second == 0:
+        turn_speed = int(input("Speed (0 to 900 dps): "))
+        if turn_speed == 0:
             break
-        inches_target = int(input("Distance (inches): "))
-        if inches_target == 0:
+        degrees_turn = int(input("Distance (inches): "))
+        if degrees_turn == 0:
             break
 
-        robot.drive_inches(inches_target, speed_deg_per_second)
+        robot.turn_degrees(degrees_turn, turn_speed)
         ev3.Sound.beep().wait()  # Fun little beep
 
     print("Goodbye!")

@@ -44,12 +44,14 @@ class Snatch3r(object):
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
-    def turn_degrees(self, degrees):
+    def turn_degrees(self, degrees, turn_speed):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         motor_turns_deg = (440 / 90) * degrees
-        left_motor.run_to_rel_pos(position_sp=motor_turns_deg, speed_sp=400)
-        right_motor.run_to_rel_pos(position_sp=-motor_turns_deg, speed_sp=400)
+        left_motor.run_to_rel_pos(position_sp=motor_turns_deg,
+                                  speed_sp=turn_speed)
+        right_motor.run_to_rel_pos(position_sp=-motor_turns_deg,
+                                   speed_sp=turn_speed)
         left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
