@@ -33,7 +33,7 @@ class Snatch3r(object):
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
-    def drive_inches_forward(self, inches_to_drive, drive_speed_sp):
+    def drive_inches(self, inches_to_drive, drive_speed_sp):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         left_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
