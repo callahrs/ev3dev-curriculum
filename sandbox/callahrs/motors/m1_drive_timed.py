@@ -88,7 +88,8 @@ Authors: David Fisher and Riley Callahan.
 #   200 dps 24 inches (make sure it drives within 6 inches of the target distance)
 #   400 dps 24 inches (make sure it drives within 6 inches of the target distance)
 #   800 dps 24 inches (make sure it drives within 6 inches of the target distance)
-#   400 dps 12 inches (make sure it drives within 3 inches of the target distance)
+#   400 dps 12 inches (make sure it drives within 3 inches of the target
+# distance)
 #   400 dps 36 inches (make sure it drives within 9 inches of the target distance)
 # Do more tests if you see fit.  Ideally you should be +/- 25% of the target goal.
 #
