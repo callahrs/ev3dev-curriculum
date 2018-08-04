@@ -53,3 +53,13 @@ class Snatch3r(object):
         left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
+
+    def drive_time_forward(self, drive_time_sp, drive_speed_sp):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        left_motor.run_forever(speed_sp=drive_speed_sp)
+        right_motor.run_forever(speed_sp=drive_speed_sp)
+        time.sleep(drive_time_sp)
+        left_motor.stop()
+        right_motor.stop()
+        ev3.Sound.beep().wait()
