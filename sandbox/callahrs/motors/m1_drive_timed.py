@@ -120,6 +120,8 @@ def main():
     while time_s != 0:
         all_sp = int(input("Enter a speed (0 to 900 dps): "))
         distance_s = int(input("Distance to travel (inches): "))
+        if all_sp == 0 or distance_s == 0:
+            break
         time_s = distance_s / (all_sp * .01)
         left_motor.run_forever(speed_sp=all_sp)
         right_motor.run_forever(speed_sp=all_sp)
