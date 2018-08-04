@@ -32,8 +32,10 @@ def motor_movement_commands():
     left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
     left_motor.run_forever(speed_sp=-300)
     left_motor.stop(stop_action="coast")
-    left_motor.run_to_abs_pos(position_sp=-360, speed_sp=400, stop_action="brake")
-    left_motor.run_to_rel_pos(position_sp=720, speed_sp=400, stop_action="brake")
+    left_motor.run_to_abs_pos(position_sp=-360, speed_sp=400,
+                              stop_action="brake")
+    left_motor.run_to_rel_pos(position_sp=720, speed_sp=400,
+                              stop_action="brake")
     left_motor.run_timed(time_sp=3000, speed_sp=400, stop_action="coast")
     # Units
     # position_sp --> degrees
@@ -48,8 +50,10 @@ def turn_90(left_motor, right_motor):
     right_motor.run_to_rel_pos(position_sp=-motor_turns_deg, speed_sp=400)
 
     # Note, that there is no delay using the motor movement commands, so we must block code execution.
-    left_motor.wait_while(ev3.Motor.STATE_RUNNING)  # Wait for the turn to finish
-    right_motor.wait_while(ev3.Motor.STATE_RUNNING)  # Wait for the turn to finish
+    left_motor.wait_while(
+        ev3.Motor.STATE_RUNNING)  # Wait for the turn to finish
+    right_motor.wait_while(
+        ev3.Motor.STATE_RUNNING)  # Wait for the turn to finish
 
     ev3.Sound.beep().wait()  # Make sure beep happens AFTER the motors stop.
 
