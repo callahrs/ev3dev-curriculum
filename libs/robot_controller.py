@@ -17,88 +17,85 @@ import time
 
 
 class Snatch3r(object):
-    """Commands for the Snatch3r robot that might be useful in many different programs."""
+
+    def __int__(self):
+        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        self.touch_sensor = ev3.TouchSensor()
+        assert self.arm_motor.connected
+        assert self.left_motor.connected
+        assert self.right_motor.connected
+        assert self.touch_sensor.connected
 
     def drive_left_inches_forward(self, inches_to_drive, drive_speed_sp):
-        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-        left_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
-                                  position_sp=inches_to_drive * 360 / 4)
-        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.left_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
+                                        position_sp=inches_to_drive * 360 / 4)
+        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def drive_right_inches_forward(self, inches_to_drive, drive_speed_sp):
-        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
-        right_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
+        self.right_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
                                    position_sp=inches_to_drive * 360 / 4)
-        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def drive_inches(self, inches_to_drive, drive_speed_sp):
-        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
-        left_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
+        self.left_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
                                   position_sp=inches_to_drive * 360 / 4)
-        right_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
+        self.right_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
                                    position_sp=inches_to_drive * 360 / 4)
-        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def turn_degrees(self, degrees, turn_speed):
-        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         motor_turns_deg = (440 / 90) * degrees
-        left_motor.run_to_rel_pos(position_sp=motor_turns_deg,
+        self.left_motor.run_to_rel_pos(position_sp=motor_turns_deg,
                                   speed_sp=turn_speed)
-        right_motor.run_to_rel_pos(position_sp=-motor_turns_deg,
+        self.right_motor.run_to_rel_pos(position_sp=-motor_turns_deg,
                                    speed_sp=turn_speed)
-        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def drive_time_forward(self, drive_time_sp, drive_speed_sp):
-        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
-        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
-        left_motor.run_forever(speed_sp=drive_speed_sp)
-        right_motor.run_forever(speed_sp=drive_speed_sp)
+        self.left_motor.run_forever(speed_sp=drive_speed_sp)
+        self.right_motor.run_forever(speed_sp=drive_speed_sp)
         time.sleep(drive_time_sp)
-        left_motor.stop()
-        right_motor.stop()
+        self.left_motor.stop()
+        self.right_motor.stop()
         ev3.Sound.beep().wait()
+
+    def drive_left_forever(self,drive_speed_sp):
+        self.left_motor.run_forever(speed_sp=drive_speed_sp)
+
+    def drive_right_forever(self,drive_speed_sp):
+        self.right_motor.run_forever(speed_sp=drive_speed_sp)
 
     def arm_calibration(self):
-        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
-        assert arm_motor.connected
-        touch_sensor = ev3.TouchSensor()
-        assert touch_sensor
-        arm_motor.run_forever(speed_sp=900)
-        while not touch_sensor.is_pressed:
+        self.arm_motor.run_forever(speed_sp=900)
+        while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
-        arm_motor.stop(stop_action="brake")
+        self.arm_motor.stop(stop_action="brake")
 
         arm_revolutions_for_full_range = 14.2
-        arm_motor.run_to_rel_pos(
+        self.arm_motor.run_to_rel_pos(
             position_sp=-arm_revolutions_for_full_range * 360
             , speed_sp=900)
-        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
-        arm_motor.position = 0
+        self.arm_motor.position = 0
 
     def arm_up(self):
-        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
-        assert arm_motor.connected
-        touch_sensor = ev3.TouchSensor()
-        assert touch_sensor
-        arm_motor.run_forever(speed_sp=900)
-        while not touch_sensor.is_pressed:
+        self.arm_motor.run_forever(speed_sp=900)
+        while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
-        arm_motor.stop(stop_action="brake")
+        self.arm_motor.stop(stop_action="brake")
         ev3.Sound.beep().wait()
 
     def arm_down(self):
-        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
-        assert arm_motor.connected
-        arm_motor.run_to_abs_pos(position_sp=0, speed_sp=900)
-        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=900)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
