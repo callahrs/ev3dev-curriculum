@@ -200,7 +200,8 @@ def screen_example():
     from PIL import Image
     lcd_screen = ev3.Screen()
 
-    image = Image.open("/home/robot/csse120/assets/images/ev3_lego/eyes_angry.bmp")
+    image = Image.open(
+        "/home/robot/csse120/assets/images/ev3_lego/eyes_angry.bmp")
     lcd_screen.image.paste(image, (0, 0))
     lcd_screen.update()
 
