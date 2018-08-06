@@ -44,15 +44,24 @@ class DataContainer(object):
 
         # All of these images are exactly 178 by 128 pixels, the exact screen resolution
         # They are made by Lego and ship with the Lego Mindstorm EV3 Home Edition software
-        self.eyes = Image.open("/home/robot/csse120/assets/images/ev3_lego/eyes_neutral.bmp")
-        self.angry_eyes = Image.open("/home/robot/csse120/assets/images/ev3_lego/eyes_angry.bmp")
-        self.puppy_dog_eyes = Image.open("/home/robot/csse120/assets/images/ev3_lego/eyes_disappointed.bmp")
-        self.sad_eyes = Image.open("/home/robot/csse120/assets/images/ev3_lego/eyes_hurt.bmp")
-        self.shifty_eyes = Image.open("/home/robot/csse120/assets/images/ev3_lego/eyes_pinch_left.bmp")
-        self.progress_0 = Image.open("/home/robot/csse120/assets/images/ev3_lego/progress_bar_0.bmp")
-        self.progress_50 = Image.open("/home/robot/csse120/assets/images/ev3_lego/progress_bar_50.bmp")
-        self.progress_100 = Image.open("/home/robot/csse120/assets/images/ev3_lego/progress_bar_100.bmp")
-        self.teary_eyes = Image.open("/home/robot/csse120/assets/images/ev3_lego/eyes_tear.bmp")
+        self.eyes = Image.open(
+            "/home/robot/csse120/assets/images/ev3_lego/eyes_neutral.bmp")
+        self.angry_eyes = Image.open(
+            "/home/robot/csse120/assets/images/ev3_lego/eyes_angry.bmp")
+        self.puppy_dog_eyes = Image.open(
+            "/home/robot/csse120/assets/images/ev3_lego/eyes_disappointed.bmp")
+        self.sad_eyes = Image.open(
+            "/home/robot/csse120/assets/images/ev3_lego/eyes_hurt.bmp")
+        self.shifty_eyes = Image.open(
+            "/home/robot/csse120/assets/images/ev3_lego/eyes_pinch_left.bmp")
+        self.progress_0 = Image.open(
+            "/home/robot/csse120/assets/images/ev3_lego/progress_bar_0.bmp")
+        self.progress_50 = Image.open(
+            "/home/robot/csse120/assets/images/ev3_lego/progress_bar_50.bmp")
+        self.progress_100 = Image.open(
+            "/home/robot/csse120/assets/images/ev3_lego/progress_bar_100.bmp")
+        self.teary_eyes = Image.open(
+            "/home/robot/csse120/assets/images/ev3_lego/eyes_tear.bmp")
 
 
 def main():
@@ -78,7 +87,7 @@ def main():
     #   .on_blue_down to call handle_blue_down_1 (that exist already) with state and dc as parameters
     rc1 = ev3.RemoteControl(channel=1)
     assert rc1.connected
-    rc1.on_red_up = lambda state: handle_red_up_1(state,dc)
+    rc1.on_red_up = lambda state: handle_red_up_1(state, dc)
     rc1.on_red_down = lambda state: handle_red_down_1(state, dc)
     rc1.on_blue_up = lambda state: handle_blue_up_1(state, dc)
     rc1.on_blue_down = lambda state: handle_blue_down_1(state, dc)
@@ -95,7 +104,7 @@ def main():
     assert rc2.connected
     assert rc3.connected
     assert rc4.connected
-    rc2.on_red_up = lambda state:handle_red_up_2(state,dc)
+    rc2.on_red_up = lambda state: handle_red_up_2(state, dc)
     rc3.on_red_up = lambda state: handle_red_up_3(state, dc)
     rc4.on_red_up = lambda state: handle_red_up_4(state, dc)
 
@@ -128,7 +137,8 @@ def main():
     # When the program completes (the user hit the Back button), display a crying image and say goodbye.
     display_image(dc.lcd_screen, dc.teary_eyes)
     ev3.Sound.speak("Goodbye").wait()
-    print("If you ran via SSH and typed 'sudo chvt 6' earlier, don't forget to type")
+    print(
+        "If you ran via SSH and typed 'sudo chvt 6' earlier, don't forget to type")
     print("'sudo chvt 1' to get Brickman back after you finish this program.")
 
 
