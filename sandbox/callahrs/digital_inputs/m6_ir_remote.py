@@ -35,7 +35,8 @@ import robot_controller as robo
 
 
 # Note that todo2 is farther down in the code.  That method needs to be written before you do todo3.
-# TODO: 3. Have someone on your team run this program on the EV3 and make sure everyone understands the code.
+# Done: 3. Have someone on your team run this program on the EV3 and make sure
+# everyone understands the code.
 # Can you see what the robot does and explain what each line of code is doing? Talk as a group to make sure.
 
 
@@ -63,6 +64,17 @@ def main():
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
 
+    rc1 = ev3.RemoteControl(channel=1)
+    rc2 = ev3.RemoteControl(channel=2)
+
+    rc1.on_red_up = lambda state: handle_red_up_1(state,dc)
+    rc1.on_red_down = lambda state: handle_red_down_1(state, dc)
+    rc1.on_blue_up = lambda state: handle_blue_up_1(state, dc)
+    rc1.on_blue_down = lambda state: handle_blue_down_1(state, dc)
+    rc2.on_red_up = lambda state: robot.arm_up()
+    rc2.on_red_down = lambda state: robot.arm_down()
+    rc2.on_blue_up = lambda state: robot.arm_calibration()
+
     # For our standard shutdown button.
     btn = ev3.Button()
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
@@ -74,7 +86,8 @@ def main():
         btn.process()
         time.sleep(0.01)
 
-    # TODO: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
+    # Done: 2. Have everyone talk about this problem together then pick one
+    # member to modify libs/robot_controller.py
     # as necessary to implement the method below as per the instructions in the opening doc string. Once the code has
     # been tested and shown to work, then have that person commit their work.  All other team members need to do a
     # VCS --> Update project...
