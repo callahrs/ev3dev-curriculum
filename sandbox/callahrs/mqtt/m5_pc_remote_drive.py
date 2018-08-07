@@ -120,7 +120,6 @@ def main():
 # Done: 4. Implement the functions for the drive button callbacks.
 
 def send_forward(mqtt_client, left_speed_entry, right_speed_entry):
-    print('forward')
     mqtt_client.send_message("drive_right_forever", [int(right_speed_entry.get())])
     mqtt_client.send_message("drive_left_forever", [int(left_speed_entry.get())])
 
@@ -152,19 +151,16 @@ def send_back(mqtt_client, left_speed_entry, right_speed_entry):
 
 # Arm command callbacks
 def send_up(mqtt_client):
-    print("arm_up")
     mqtt_client.send_message("arm_up")
 
 
 def send_down(mqtt_client):
-    print("arm_down")
     mqtt_client.send_message("arm_down")
 
 
 # Quit and Exit button callbacks
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:
-        print("shutdown")
         mqtt_client.send_message("shutdown")
     mqtt_client.close()
     exit()
