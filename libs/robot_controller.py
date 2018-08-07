@@ -36,15 +36,19 @@ class Snatch3r(object):
         assert self.touch_sensor.connected
 
     def drive_left_inches_forward(self, inches_to_drive, drive_speed_sp):
-        self.left_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
-                                       position_sp=inches_to_drive * 360 / 4)
-        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        assert left_motor.connected
+        left_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
+                                  position_sp=inches_to_drive * 360 / 4)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def drive_right_inches_forward(self, inches_to_drive, drive_speed_sp):
-        self.right_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
-                                        position_sp=inches_to_drive * 360 / 4)
-        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert right_motor.connected
+        right_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
+                                   position_sp=inches_to_drive * 360 / 4)
+        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def drive_inches(self, inches_to_drive, drive_speed_sp):
@@ -61,15 +65,19 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def turn_forever(self, turn_speed):
-        self.left_motor.run_forever(speed_sp=turn_speed)
-        self.right_motor.run_forever(speed_sp=-turn_speed)
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert left_motor.connected
+        assert right_motor.connected
+        left_motor.run_forever(speed_sp=turn_speed)
+        right_motor.run_forever(speed_sp=-turn_speed)
 
     def turn_degrees(self, degrees, turn_speed):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         assert left_motor.connected
         assert right_motor.connected
-        motor_turns_deg = (440 / 90) * degrees
+        motor_turns_deg = (390 / 90) * degrees
         left_motor.run_to_rel_pos(position_sp=motor_turns_deg,
                                   speed_sp=turn_speed)
         right_motor.run_to_rel_pos(position_sp=-motor_turns_deg,
@@ -79,57 +87,83 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def drive_time_forward(self, drive_time_sp, drive_speed_sp):
-        self.left_motor.run_forever(speed_sp=drive_speed_sp)
-        self.right_motor.run_forever(speed_sp=drive_speed_sp)
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert left_motor.connected
+        assert right_motor.connected
+        left_motor.run_forever(speed_sp=drive_speed_sp)
+        right_motor.run_forever(speed_sp=drive_speed_sp)
         time.sleep(drive_time_sp)
-        self.left_motor.stop()
-        self.right_motor.stop()
+        left_motor.stop()
+        right_motor.stop()
         ev3.Sound.beep().wait()
 
     def drive_both_forever(self, drive_speed_sp):
-        self.left_motor.run_forever(speed_sp=drive_speed_sp)
-        self.right_motor.run_forever(speed_sp=drive_speed_sp)
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert left_motor.connected
+        assert right_motor.connected
+        left_motor.run_forever(speed_sp=drive_speed_sp)
+        right_motor.run_forever(speed_sp=drive_speed_sp)
 
     def drive_left_forever(self, drive_speed_sp):
-        self.left_motor.run_forever(speed_sp=drive_speed_sp)
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        assert left_motor.connected
+        left_motor.run_forever(speed_sp=drive_speed_sp)
 
     def drive_right_forever(self, drive_speed_sp):
-        self.right_motor.run_forever(speed_sp=drive_speed_sp)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert right_motor.connected
+        right_motor.run_forever(speed_sp=drive_speed_sp)
 
     def drive_both_stop(self):
-        self.left_motor.stop()
-        self.right_motor.stop()
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert left_motor.connected
+        assert right_motor.connected
+        left_motor.stop()
+        right_motor.stop()
 
     def drive_left_stop(self):
-        self.left_motor.stop()
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        assert left_motor.connected
+        left_motor.stop()
 
     def drive_right_stop(self):
-        self.right_motor.stop()
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert right_motor.connected
+        right_motor.stop()
 
     def arm_calibration(self):
-        self.arm_motor.run_forever(speed_sp=900)
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert arm_motor.connected
+        arm_motor.run_forever(speed_sp=900)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
-        self.arm_motor.stop(stop_action="brake")
+        arm_motor.stop(stop_action="brake")
 
         arm_revolutions_for_full_range = 14.2
-        self.arm_motor.run_to_rel_pos(
+        arm_motor.run_to_rel_pos(
             position_sp=-arm_revolutions_for_full_range * 360, speed_sp=900)
-        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
-        self.arm_motor.position = 0
+        arm_motor.position = 0
 
     def arm_up(self):
-        self.arm_motor.run_forever(speed_sp=900)
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert arm_motor.connected
+        arm_motor.run_forever(speed_sp=900)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
-        self.arm_motor.stop(stop_action="brake")
+        arm_motor.stop(stop_action="brake")
         ev3.Sound.beep().wait()
 
     def arm_down(self):
-        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=900)
-        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert arm_motor.connected
+        arm_motor.run_to_abs_pos(position_sp=0, speed_sp=900)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def loop_forever(self):
@@ -138,8 +172,12 @@ class Snatch3r(object):
             time.sleep(0.1)
 
     def shutdown(self):
-        self.left_motor.stop()
-        self.right_motor.stop()
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert left_motor.connected
+        assert right_motor.connected
+        left_motor.stop()
+        right_motor.stop()
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
         ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         print('Goodbye')
