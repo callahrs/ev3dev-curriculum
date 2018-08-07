@@ -112,11 +112,10 @@ def main():
     mqtt_client.connect_to_pc()
     # Buttons on EV3 (these obviously assume TO DO: 3. is done)
     btn = ev3.Button()
-    btn.on_up = lambda state: handle_button_press(state, mqtt_client, "Up")
-    btn.on_down = lambda state: handle_button_press(state, mqtt_client, "Down")
-    btn.on_left = lambda state: handle_button_press(state, mqtt_client, "Left")
-    btn.on_right = lambda state: handle_button_press(state, mqtt_client,
-                                                     "Right")
+    btn.on_up = lambda state: handle_button_press(state, mqtt_client, ["Up"])
+    btn.on_down = lambda state: handle_button_press(state, mqtt_client, ["Down"])
+    btn.on_left = lambda state: handle_button_press(state, mqtt_client, ["Left"])
+    btn.on_right = lambda state: handle_button_press(state, mqtt_client, ["Right"])
     btn.on_backspace = lambda state: handle_shutdown(state, my_delegate)
 
     while my_delegate.running:
