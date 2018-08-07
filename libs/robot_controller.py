@@ -137,11 +137,12 @@ class Snatch3r(object):
     def arm_calibration(self):
         arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         assert arm_motor.connected
+        touch_sensor = ev3.TouchSensor()
+        assert touch_sensor.connected
         arm_motor.run_forever(speed_sp=900)
-        while not self.touch_sensor.is_pressed:
+        while not touch_sensor.is_pressed:
             time.sleep(0.01)
         arm_motor.stop(stop_action="brake")
-
         arm_revolutions_for_full_range = 14.2
         arm_motor.run_to_rel_pos(
             position_sp=-arm_revolutions_for_full_range * 360, speed_sp=900)
@@ -153,8 +154,10 @@ class Snatch3r(object):
     def arm_up(self):
         arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         assert arm_motor.connected
+        touch_sensor = ev3.TouchSensor()
+        assert touch_sensor.connected
         arm_motor.run_forever(speed_sp=900)
-        while not self.touch_sensor.is_pressed:
+        while not touch_sensor.is_pressed:
             time.sleep(0.01)
         arm_motor.stop(stop_action="brake")
         ev3.Sound.beep().wait()
@@ -187,7 +190,9 @@ class Snatch3r(object):
     def seek_beacon(self):
         forward_speed = 300
         turn_speed = 100
-        while not self.touch_sensor.is_pressed:
+        touch_sensor = ev3.TouchSensor()
+        assert touch_sensor.connected
+        while not touch_sensor.is_pressed:
             current_heading = self.BeaconSeeker.heading
             current_distance = self.BeaconSeeker.distance
             if current_distance == -128:
