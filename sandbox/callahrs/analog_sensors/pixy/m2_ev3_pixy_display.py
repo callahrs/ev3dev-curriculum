@@ -3,8 +3,8 @@
 The goal of this module is to practice using the Pixy and MQTT at the same time.  This module will send data from the
 EV3 to the PC.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.  February 2017.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Riley Callahan.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -44,7 +44,8 @@ def main():
     ev3.Sound.speak("Goodbye").wait()
     mqtt_client.close()
 
-# TODO: 5. Call over a TA or instructor to sign your team's checkoff sheet.
+
+# Done: 5. Call over a TA or instructor to sign your team's checkoff sheet.
 #
 # Observations you should make, if the EV3 has data the PC can know that data too using MQTT.
 
