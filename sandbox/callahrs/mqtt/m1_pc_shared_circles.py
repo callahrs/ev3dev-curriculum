@@ -15,11 +15,11 @@ In addition to the MQTT goals, this example will show some tkinter tricks:
   -- How to capture mouse clicks and process the X Y locations
   -- How to draw circles onto a Tkinter Canvas.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Riley Callahan.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-
-# TODO: 2. Select one team member to open libs/mqtt_remote_method_calls.py and complete the TO DO that is in that file.
+# Done: 2. Select one team member to open libs/mqtt_remote_method_calls.py and
+# complete the TO DO that is in that file.
 # After making that change, they should commit their work and all other team members should do a VCS -> Update
 # After all team members see that file changed you can move on to the next TO DO
 # Also someone should update the libs/mqtt_remote_method_calls.py file on the robot too (at some point before m3).
@@ -59,11 +59,13 @@ def main():
     label.grid(columnspan=2)
 
     # Make a tkinter.Canvas on a Frame.
-    canvas = tkinter.Canvas(main_frame, background="lightgray", width=800, height=500)
+    canvas = tkinter.Canvas(main_frame, background="lightgray", width=800,
+                            height=500)
     canvas.grid(columnspan=2)
 
     # Make callbacks for mouse click events.
-    canvas.bind("<Button-1>", lambda event: left_mouse_click(event, mqtt_client))
+    canvas.bind("<Button-1>",
+                lambda event: left_mouse_click(event, mqtt_client))
 
     # Make callbacks for the two buttons.
     clear_button = ttk.Button(main_frame, text="Clear")
