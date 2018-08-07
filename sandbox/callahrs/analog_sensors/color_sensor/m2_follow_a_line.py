@@ -35,6 +35,8 @@ def main():
 
     while True:
         command_to_run = input("Enter w (white), b (black), f (follow), or q (for quit): ")
+        color_sensor = ev3.ColorSensor()
+        assert color_sensor
         if command_to_run == 'w':
             print("Calibrate the white light level")
             # Done: 2. Read the reflected_light_intensity property of the color sensor and set white_level to that value
@@ -43,12 +45,12 @@ def main():
             #   self.color_sensor = ev3.ColorSensor()
             #   assert self.color_sensor
             # Then here you can use a command like robot.color_sensor.reflected_light_intensity
-            white_level = robot.color_sensor.reflected_light_intensity
+            white_level = color_sensor.reflected_light_intensity
             print("New white level is {}.".format(white_level))
         elif command_to_run == 'b':
             print("Calibrate the black light level")
             # Done: 3. Read the reflected_light_intensity property of the color sensor and set black_level
-            black_level = robot.color_sensor.reflected_light_intensity
+            black_level = color_sensor.reflected_light_intensity
             print("New black level is {}.".format(black_level))
         elif command_to_run == 'f':
             print("Follow the line until the touch sensor is pressed.")
@@ -79,20 +81,24 @@ def follow_the_line(robot, white_level, black_level):
     # Optional extra - For a harder challenge could you drive on the black line and handle left or right turns?
     threshold = (white_level + black_level) // 2
     while True:
-        if robot.color_sensor.reflected_light_intensity < threshold:
+        color_sensor = ev3.ColorSensor()
+        assert color_sensor
+        touch_sensor = ev3.TouchSensor()
+        assert touch_sensor
+        if color_sensor.reflected_light_intensity < threshold:
             robot.drive_both_stop()
-            need_turn_intensity = robot.color_sensor.reflected_light_intensity
+            need_turn_intensity = color_sensor.reflected_light_intensity
             robot.turn_forever(300)
             time.sleep(.1)
             robot.drive_both_stop()
-            if robot.color_sensor.reflected_light_intensity < need_turn_intensity:
+            if color_sensor.reflected_light_intensity < need_turn_intensity:
                 robot.turn_forever(-300)
                 time.sleep(.2)
                 robot.drive_both_stop()
         else:
             robot.drive_both_forever(300)
             time.sleep(.2)
-        if robot.touch_sensor.is_pressed:
+        if touch_sensor.is_pressed:
             robot.drive_both_stop()
             ev3.Sound.speak("Done")
 
