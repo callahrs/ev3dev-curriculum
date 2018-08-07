@@ -27,9 +27,9 @@ class Snatch3r(object):
         self.ir_sensor = ev3.InfraredSensor()
         self.BeaconSeeker = ev3.BeaconSeeker()
         self.pixy = ev3.Sensor(driver_name="pixy-lego")
-        assert self.pixy
-        assert self.ir_sensor
-        assert self.color_sensor
+        assert self.pixy.connected
+        assert self.ir_sensor.connected
+        assert self.color_sensor.connected
         assert self.arm_motor.connected
         assert self.left_motor.connected
         assert self.right_motor.connected
@@ -48,12 +48,16 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def drive_inches(self, inches_to_drive, drive_speed_sp):
-        self.left_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
-                                       position_sp=inches_to_drive * 360 / 4)
-        self.right_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
-                                        position_sp=inches_to_drive * 360 / 4)
-        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert left_motor.connected
+        assert right_motor.connected
+        left_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
+                                  position_sp=inches_to_drive * 360 / 4)
+        right_motor.run_to_rel_pos(speed_sp=drive_speed_sp,
+                                   position_sp=inches_to_drive * 360 / 4)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def turn_forever(self, turn_speed):
@@ -61,13 +65,17 @@ class Snatch3r(object):
         self.right_motor.run_forever(speed_sp=-turn_speed)
 
     def turn_degrees(self, degrees, turn_speed):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert left_motor.connected
+        assert right_motor.connected
         motor_turns_deg = (440 / 90) * degrees
-        self.left_motor.run_to_rel_pos(position_sp=motor_turns_deg,
-                                       speed_sp=turn_speed)
-        self.right_motor.run_to_rel_pos(position_sp=-motor_turns_deg,
-                                        speed_sp=turn_speed)
-        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        left_motor.run_to_rel_pos(position_sp=motor_turns_deg,
+                                  speed_sp=turn_speed)
+        right_motor.run_to_rel_pos(position_sp=-motor_turns_deg,
+                                   speed_sp=turn_speed)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def drive_time_forward(self, drive_time_sp, drive_speed_sp):
