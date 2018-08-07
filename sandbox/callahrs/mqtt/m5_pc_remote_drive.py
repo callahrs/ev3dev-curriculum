@@ -120,13 +120,13 @@ def main():
 # Done: 4. Implement the functions for the drive button callbacks.
 
 def send_forward(mqtt_client, left_speed_entry, right_speed_entry):
-    mqtt_client.send_message("drive_right_forever", [right_speed_entry])
-    mqtt_client.send_message("drive_left_forever", [left_speed_entry])
+    mqtt_client.send_message("drive_right_forever", [int(right_speed_entry.get())])
+    mqtt_client.send_message("drive_left_forever", [int(left_speed_entry.get())])
 
 
 def send_left(mqtt_client, left_speed_entry, right_speed_entry):
-    mqtt_client.send_message("drive_right_forever", [right_speed_entry])
-    mqtt_client.send_message("drive_left_forever", [(-1 * left_speed_entry)])
+    mqtt_client.send_message("drive_right_forever", [int(right_speed_entry.get())])
+    mqtt_client.send_message("drive_left_forever", [-1 * int(left_speed_entry.get())])
 
 
 def send_stop(mqtt_client):
@@ -134,13 +134,13 @@ def send_stop(mqtt_client):
 
 
 def send_right(mqtt_client, left_speed_entry, right_speed_entry):
-    mqtt_client.send_message("drive_right_forever", [(-1 * right_speed_entry)])
-    mqtt_client.send_message("drive_left_forever", [left_speed_entry])
+    mqtt_client.send_message("drive_right_forever", [-1 * int(right_speed_entry.get())])
+    mqtt_client.send_message("drive_left_forever", [int(left_speed_entry.get())])
 
 
 def send_back(mqtt_client, left_speed_entry, right_speed_entry):
-    mqtt_client.send_message("drive_right_forever", [(-1 * right_speed_entry)])
-    mqtt_client.send_message("drive_left_forever", [(-1 * left_speed_entry)])
+    mqtt_client.send_message("drive_right_forever", [-1 * int(right_speed_entry.get())])
+    mqtt_client.send_message("drive_left_forever", [-1 * int(left_speed_entry.get())])
 
 
 # Done: 5. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.  This is the final one!
