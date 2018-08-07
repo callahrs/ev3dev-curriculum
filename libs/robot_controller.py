@@ -73,6 +73,16 @@ class Snatch3r(object):
     def drive_right_forever(self, drive_speed_sp):
         self.right_motor.run_forever(speed_sp=drive_speed_sp)
 
+    def drive_both_stop(self):
+        self.left_motor.stop()
+        self.right_motor.stop()
+
+    def drive_left_stop(self):
+        self.left_motor.stop()
+
+    def drive_right_stop(self):
+        self.right_motor.stop()
+
     def arm_calibration(self):
         self.arm_motor.run_forever(speed_sp=900)
         while not self.touch_sensor.is_pressed:
