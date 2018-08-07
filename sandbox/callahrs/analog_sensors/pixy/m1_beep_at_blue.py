@@ -36,8 +36,6 @@ def main():
         #   assert self.pixy
         # Then here you can use a command like width = robot.pixy.value(3)
 
-
-
         time.sleep(0.1)
 
     print("Goodbye!")

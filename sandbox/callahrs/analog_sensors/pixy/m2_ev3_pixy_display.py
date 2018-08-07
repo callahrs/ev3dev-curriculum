@@ -28,15 +28,11 @@ def main():
     robot.pixy.mode = "SIG1"
 
     while not robot.touch_sensor.is_pressed:
-
         # TODO: 3. Read the Pixy values for x, y, width, and height
         # Print the values (much like the print_pixy_readings example)
 
         # TODO: 4. Send the Pixy values to the PC by calling the on_rectangle_update method
         # If you open m2_pc_pixy_display you can see the parameters for that method [x, y, width, height]
-
-
-
 
         time.sleep(0.25)
 
@@ -54,4 +50,3 @@ def main():
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
 main()
-

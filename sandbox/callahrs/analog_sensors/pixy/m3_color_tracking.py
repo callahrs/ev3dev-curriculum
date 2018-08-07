@@ -28,7 +28,6 @@ def main():
     turn_speed = 100
 
     while not robot.touch_sensor.is_pressed:
-
         # TODO: 2. Read the Pixy values for x and y
         # Print the values for x and y
 
@@ -37,8 +36,6 @@ def main():
         #   If the Pixy x value is greater than 170 turn right (turn_speed, -turn_speed)
         #   If the Pixy x value is between 150 and 170 stop the robot
         # Continuously track the color until the touch sensor is pressed to end the program.
-
-
 
         time.sleep(0.25)
 
