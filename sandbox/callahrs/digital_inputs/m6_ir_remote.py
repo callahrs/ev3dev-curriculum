@@ -106,34 +106,34 @@ def main():
 # Done: 6. Implement the IR handler callbacks handlers.
 
 def handle_red_up_1(button_state, robot):
-    if button_state:
+    while button_state:
         robot.drive_left_forever(600)
     else:
-        robot.left_motor.stop()
+        robot.drive_left_stop()
         ev3.Sound.beep().wait()
 
 
 def handle_red_down_1(button_state, robot):
-    if button_state:
+    while button_state:
         robot.drive_left_forever(-600)
     else:
-        robot.left_motor.stop()
+        robot.drive_left_stop()
         ev3.Sound.beep().wait()
 
 
 def handle_blue_up_1(button_state, robot):
-    if button_state:
+    while button_state:
         robot.drive_right_forever(600)
     else:
-        robot.right_motor.stop()
+        robot.drive_right_stop()
         ev3.Sound.beep().wait()
 
 
 def handle_blue_down_1(button_state, robot):
-    if button_state:
+    while button_state:
         robot.drive_right_forever(-600)
     else:
-        robot.right_motor.stop()
+        robot.drive_right_stop()
         ev3.Sound.beep().wait()
 
 
