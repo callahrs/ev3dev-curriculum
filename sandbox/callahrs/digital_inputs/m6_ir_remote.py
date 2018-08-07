@@ -68,10 +68,10 @@ def main():
     rc1 = ev3.RemoteControl(channel=1)
     rc2 = ev3.RemoteControl(channel=2)
 
-    rc1.on_red_up = lambda state: handle_red_up_1(state, robot)
-    rc1.on_red_down = lambda state: handle_red_down_1(state, robot)
-    rc1.on_blue_up = lambda state: handle_blue_up_1(state, robot)
-    rc1.on_blue_down = lambda state: handle_blue_down_1(state, robot)
+    rc1.on_red_up = lambda state: handle_red_up_1(state)
+    rc1.on_red_down = lambda state: handle_red_down_1(state)
+    rc1.on_blue_up = lambda state: handle_blue_up_1(state)
+    rc1.on_blue_down = lambda state: handle_blue_down_1(state)
     rc2.on_red_up = lambda state: handle_arm_up_button(state, robot)
     rc2.on_red_down = lambda state: handle_arm_down_button(state, robot)
     rc2.on_blue_up = lambda state: handle_calibrate_button(state, robot)
@@ -105,34 +105,43 @@ def main():
 # ----------------------------------------------------------------------
 # Done: 6. Implement the IR handler callbacks handlers.
 
-def handle_red_up_1(button_state, robot):
-    while button_state:
-        robot.drive_left_forever(600)
-    robot.drive_left_stop()
-    ev3.Sound.beep().wait()
-
-
-def handle_red_down_1(button_state, robot):
+def handle_red_up_1(button_state):
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    assert left_motor.connected
     if button_state:
-        robot.drive_left_forever(-600)
+        left_motor.run_forever(speed_sp=600)
     else:
-        robot.drive_left_stop()
+        left_motor.stop()
         ev3.Sound.beep().wait()
 
 
-def handle_blue_up_1(button_state, robot):
+def handle_red_down_1(button_state):
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    assert left_motor.connected
     if button_state:
-        robot.drive_right_forever(600)
+        left_motor.run_forever(speed_sp=-600)
     else:
-        robot.drive_right_stop()
+        left_motor.stop()
         ev3.Sound.beep().wait()
 
 
-def handle_blue_down_1(button_state, robot):
+def handle_blue_up_1(button_state):
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    assert right_motor.connected
     if button_state:
-        robot.drive_right_forever(-600)
+        right_motor.run_forever(speed_sp=600)
     else:
-        robot.drive_right_stop()
+        right_motor.stop()
+        ev3.Sound.beep().wait()
+
+
+def handle_blue_down_1(button_state):
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+    assert right_motor.connected
+    if button_state:
+        right_motor.run_forever(speed_sp=-600)
+    else:
+        right_motor.stop()
         ev3.Sound.beep().wait()
 
 
