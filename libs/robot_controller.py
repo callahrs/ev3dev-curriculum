@@ -25,6 +25,7 @@ class Snatch3r(object):
         self.touch_sensor = ev3.TouchSensor()
         self.color_sensor = ev3.ColorSensor()
         self.ir_sensor = ev3.InfraredSensor()
+        self.BeaconSeeker = ev3.BeaconSeeker()
         assert self.ir_sensor
         assert self.color_sensor
         assert self.arm_motor.connected
@@ -134,3 +135,41 @@ class Snatch3r(object):
         print('Goodbye')
         ev3.Sound.speak('Goodbye')
         self.running = False
+
+    def seek_beacon(self):
+        forward_speed = 300
+        turn_speed = 100
+        while not self.touch_sensor.is_pressed:
+            current_heading = self.BeaconSeeker.heading
+            current_distance = self.BeaconSeeker.distance
+            if current_distance == -128:
+                print("IR Remote not found. Distance is -128")
+                self.drive_both_stop()
+            else:
+                if math.fabs(current_heading) < 2:
+                    print("On the right heading. Distance: ", current_distance)
+                    if current_distance > 0:
+                        self.drive_both_forever(forward_speed)
+                    if current_distance == 0:
+                        self.drive_both_stop()
+                        return True
+                elif math.fabs(current_heading) > 10:
+                    print("Heading is too far off to fix: ", current_heading)
+                elif current_heading < 0:
+                    self.drive_both_stop()
+                    self.turn_forever(-turn_speed)
+                    time.sleep(.1)
+                    self.drive_both_stop()
+                    print("Adjusting heading: ", current_heading)
+                elif current_heading > 0:
+                    self.drive_both_stop()
+                    self.turn_forever(turn_speed)
+                    time.sleep(.2)
+                    self.drive_both_stop()
+                    print("Adjusting heading: ", current_heading)
+                else:
+                    print("Error in Code or No Heading")
+            time.sleep(0.2)
+        print("Abandon ship!")
+        self.drive_both_stop()
+        return False
