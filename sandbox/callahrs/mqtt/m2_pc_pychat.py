@@ -22,16 +22,19 @@ class MyDelegate(object):
 
 
 def main():
-    # TODO: 2. Set my_name and set team_member_name then try this program with that person.
+    # Done: 2. Set my_name and set team_member_name then try this program with
+    # that person.
     # For teams of 3 just have 2 people talk to each other and the other person can just watch this time.
-    my_name = "Dave"  # Used to set the topic that you are *subscribed to* listen to
-    team_member_name = "Dave"  # Used to set the topic that you will *publish to*
+    my_name = "Riley"  # Used to set the topic that you are *subscribed to*
+    # listen to
+    team_member_name = "Riley"  # Used to set the topic that you will *publish
+    #  to*
 
     # What happens if you set my_name and team_member_name to the same value?
     # The goal is simply for you to become more comfortable with how subscriptions and publish work with MQTT
     # Review the code to see if there are any other useful things you can learn.
 
-    # TODO: 3. Call over a TA or instructor to sign your team's checkoff sheet.
+    # Done: 3. Call over a TA or instructor to sign your team's checkoff sheet.
     #
     # Observations you should make:
     # You published messages to "legoXX/{team_member_name}"  (where XX is set in libs/mqtt_remote_method_calls.py)
