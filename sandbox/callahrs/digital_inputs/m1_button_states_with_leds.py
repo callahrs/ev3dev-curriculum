@@ -22,7 +22,7 @@ def main():
     print(" Buttons and LEDs")
     print("--------------------------------------------")
     ev3.Sound.speak("Buttons and L E Dees").wait()
-
+    time.sleep(3)
     # Opening LED dance (to show the LED syntax)
     # Red LEDs
     ev3.Sound.speak("Red")
