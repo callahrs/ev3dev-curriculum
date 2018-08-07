@@ -74,7 +74,7 @@ def follow_the_line(robot, white_level, black_level):
       :type black_level: int
     """
 
-    # TODO: 5. Use the calibrated values for white and black to calculate a light threshold to determine if your robot
+    # Done: 5. Use the calibrated values for white and black to calculate a light threshold to determine if your robot
     # should drive straight or turn to the right.  You will need to test and refine your code until it works well.
     # Optional extra - For a harder challenge could you drive on the black line and handle left or right turns?
     threshold = (white_level + black_level) // 2
