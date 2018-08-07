@@ -62,7 +62,11 @@ def seek_beacon(robot):
     forward_speed = 300
     turn_speed = 100
 
-    while not robot.touch_sensor.is_pressed:
+    touch_sensor = ev3.TouchSensor()
+    assert touch_sensor.connected
+    ir_sensor = ev3.InfraredSensor()
+    assert ir_sensor.connected
+    while not touch_sensor.is_pressed:
         # The touch sensor can be used to abort the attempt (sometimes handy during testing)
 
         # Done: 3. Use the beacon_seeker object to get the current heading and distance.
@@ -95,10 +99,10 @@ def seek_beacon(robot):
                 print("On the right heading. Distance: ", current_distance)
                 if current_distance > 0:
                     robot.drive_both_forever(forward_speed)
-                if current_distance == 0:
+                if current_distance <= 0:
                     robot.drive_both_stop()
                     return True
-            elif math.fabs(current_heading) > 10:
+            elif math.fabs(current_heading) > 20:
                 print("Heading is too far off to fix: ", current_heading)
             elif current_heading < 0:
                 robot.drive_both_stop()
