@@ -51,6 +51,10 @@ class Snatch3r(object):
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
+    def turn_forever(self, turn_speed):
+        self.left_motor.run_forever(speed_sp=turn_speed)
+        self.right_motor.run_forever(speed_sp=-turn_speed)
+
     def turn_degrees(self, degrees, turn_speed):
         motor_turns_deg = (440 / 90) * degrees
         self.left_motor.run_to_rel_pos(position_sp=motor_turns_deg,
@@ -68,6 +72,10 @@ class Snatch3r(object):
         self.left_motor.stop()
         self.right_motor.stop()
         ev3.Sound.beep().wait()
+
+    def drive_both_forever(self, drive_speed_sp):
+        self.left_motor.run_forever(speed_sp=drive_speed_sp)
+        self.right_motor.run_forever(speed_sp=drive_speed_sp)
 
     def drive_left_forever(self, drive_speed_sp):
         self.left_motor.run_forever(speed_sp=drive_speed_sp)
