@@ -79,28 +79,36 @@ def follow_the_line(robot, white_level, black_level):
     # Done: 5. Use the calibrated values for white and black to calculate a light threshold to determine if your robot
     # should drive straight or turn to the right.  You will need to test and refine your code until it works well.
     # Optional extra - For a harder challenge could you drive on the black line and handle left or right turns?
-    threshold = (white_level + black_level) // 2
+    threshold = 3
     while True:
         color_sensor = ev3.ColorSensor()
         assert color_sensor
         touch_sensor = ev3.TouchSensor()
         assert touch_sensor
-        if color_sensor.reflected_light_intensity < threshold:
+        if color_sensor.reflected_light_intensity > threshold:
+            robot.drive_both_stop()
+            robot.turn_forever(300)
+            time.sleep(.05)
             robot.drive_both_stop()
             need_turn_intensity = color_sensor.reflected_light_intensity
-            robot.turn_forever(300)
+            robot.turn_forever(-300)
             time.sleep(.1)
             robot.drive_both_stop()
             if color_sensor.reflected_light_intensity < need_turn_intensity:
-                robot.turn_forever(-300)
-                time.sleep(.2)
+                robot.turn_forever(300)
+                time.sleep(.1)
+                robot.drive_both_stop()
+            else:
+                robot.turn_forever(300)
+                time.sleep(.05)
                 robot.drive_both_stop()
         else:
             robot.drive_both_forever(300)
-            time.sleep(.2)
+            time.sleep(.1)
         if touch_sensor.is_pressed:
             robot.drive_both_stop()
             ev3.Sound.speak("Done")
+            break
 
 
 # Done: 6. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
