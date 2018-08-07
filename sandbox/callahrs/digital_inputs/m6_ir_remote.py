@@ -72,7 +72,7 @@ def main():
     rc1.on_red_down = lambda state: handle_red_down_1(state, robot)
     rc1.on_blue_up = lambda state: handle_blue_up_1(state, robot)
     rc1.on_blue_down = lambda state: handle_blue_down_1(state, robot)
-    rc2.on_red_up = lambda state: handle_arm_down_button(state, robot)
+    rc2.on_red_up = lambda state: handle_arm_up_button(state, robot)
     rc2.on_red_down = lambda state: handle_arm_down_button(state, robot)
     rc2.on_blue_up = lambda state: handle_calibrate_button(state, robot)
 
@@ -106,10 +106,8 @@ def main():
 # Done: 6. Implement the IR handler callbacks handlers.
 
 def handle_red_up_1(button_state, robot):
-    if button_state:
+    while button_state:
         robot.drive_left_forever(600)
-        while button_state:
-            time.sleep(.1)
     robot.drive_left_stop()
     ev3.Sound.beep().wait()
 
