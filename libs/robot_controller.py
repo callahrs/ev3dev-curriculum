@@ -81,8 +81,7 @@ class Snatch3r(object):
 
         arm_revolutions_for_full_range = 14.2
         self.arm_motor.run_to_rel_pos(
-            position_sp=-arm_revolutions_for_full_range * 360
-            , speed_sp=900)
+            position_sp=-arm_revolutions_for_full_range * 360, speed_sp=900)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
@@ -100,10 +99,16 @@ class Snatch3r(object):
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
+    def loop_forever(self):
+        self.running = True
+        while self.running:
+            time.sleep(0.1)
+
     def shutdown(self):
         self.left_motor.stop()
         self.right_motor.stop()
         ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
-        ev3.Leds.set_color(ev3.Leds.Right, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
         print('Goodbye')
         ev3.Sound.speak('Goodbye')
+        self.running = False
