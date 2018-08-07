@@ -192,9 +192,10 @@ class Snatch3r(object):
         turn_speed = 100
         touch_sensor = ev3.TouchSensor()
         assert touch_sensor.connected
+        BeaconSeeker = ev3.BeaconSeeker()
         while not touch_sensor.is_pressed:
-            current_heading = self.BeaconSeeker.heading
-            current_distance = self.BeaconSeeker.distance
+            current_heading = BeaconSeeker.heading
+            current_distance = BeaconSeeker.distance
             if current_distance == -128:
                 print("IR Remote not found. Distance is -128")
                 self.drive_both_stop()
