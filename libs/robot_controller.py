@@ -246,7 +246,19 @@ class Snatch3r(object):
         while froze_state or ev3.Motor.STATE_RUNNING:
             if touch_sensor.is_pressed:
                 froze_state = True
+                self.drive_both_stop()
+                left_position = left_motor.position
+                right_position = right_motor.position
                 print("Touch Sensor")
+                self.arm_up().wait()
+                self.turn_degrees(180, 400).wait()
+                ev3.Sound.speak("Stop Bugging Me").wait()
+                self.arm_down()
+                self.turn_degrees(-180, 400).wait()
+                left_motor.position = left_position
+                right_motor.position = right_position
+                left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
+                right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
                 froze_state = False
             if pixy.value(3) > 0:
                 froze_state = True
