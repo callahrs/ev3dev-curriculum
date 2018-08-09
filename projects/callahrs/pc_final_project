@@ -1,5 +1,7 @@
 import tkinter
 from tkinter import ttk
+import PIL.ImageTk
+import PIL.Image
 
 import mqtt_remote_method_calls as com
 
@@ -9,7 +11,7 @@ class MyDelegateOnThePc(object):
     def __init__(self, label_to_display_messages_in):
         self.display_completed = label_to_display_messages_in
 
-    def button_pressed(self, lines_completed):
+    def lines_done(self, lines_completed):
         message_to_display = "{} lines completed.".format(lines_completed)
         self.display_completed.configure(text=message_to_display)
 
@@ -25,7 +27,37 @@ def main():
     label1.grid(row=0, column=0, columnspan=2)
 
     line_message = ttk.Label(main_frame, text="---")
-    line_message.grid(row=2, column=0, columnspan=2)
+    line_message.grid(row=1, column=0, columnspan=2)
+
+    radius_label = ttk.Label(main_frame, text="Radius (In):")
+    radius_label.grid(row=2, column=0, sticky="E")
+
+    points_label = ttk.Label(main_frame, text="Points:")
+    points_label.grid(row=3, column=0, sticky="E")
+
+    speed_label = ttk.Label(main_frame, text="Speed:")
+    speed_label.grid(row=4, column=0, sticky="E")
+
+    radius_entry = ttk.Entry(main_frame, width=8)
+    radius_entry.insert(0, "24")
+    radius_entry.grid(row=2, column=1)
+
+    points_entry = ttk.Entry(main_frame, width=8)
+    points_entry.insert(0, "5")
+    points_entry.grid(row=3, column=1)
+
+    speed_entry = ttk.Entry(main_frame, width=8)
+    speed_entry.insert(0, "600")
+    speed_entry.grid(row=4, column=1)
+
+    img = PIL.Image.open("5point.PNG")
+    photo = PIL.ImageTk.PhotoImage(img)
+    image_label = ttk.Label(main_frame, image=photo)
+    image_label.grid(row=0, column=2, rowspan=5, columnspan=2)
+
+    draw_button = ttk.Button(main_frame, text="Draw")
+    draw_button.grid(row=5, column=2)
+    draw_button['command'] = (lambda: handle_draw(mqtt_client, main_frame, int(radius_entry.get()), int(points_entry.get()), int(speed_entry.get()), image_label))
 
     q_button = ttk.Button(main_frame, text="Quit")
     q_button.grid(row=5, column=3)
@@ -41,6 +73,16 @@ def main():
 def quit_program(mqtt_client):
     mqtt_client.close()
     exit()
+
+
+def handle_draw(mqtt_client, main_frame, radius, points, speed, image_label):
+    if points <= 4:
+        points = 4
+        photo4 = PIL.ImageTk.PhotoImage(PIL.Image.open("4point.PNG"))
+        image_label.configure(image=photo4)
+        image_label.image = photo4
+
+    print("changed")
 
 
 main()
