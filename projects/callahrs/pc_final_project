@@ -1,0 +1,37 @@
+import ev3dev.ev3 as ev3
+import time
+import math
+import tkinter
+from tkinter import ttk
+import mqtt_remote_method_calls as com
+
+
+class MyDelegateOnThePc(object):
+
+    def __init__(self, label_to_display_messages_in):
+        self.display_completed = label_to_display_messages_in
+
+    def button_pressed(self, lines_completed):
+        message_to_display = "{} lines completed.".format(lines_completed)
+        self.display_completed.configure(text=message_to_display)
+
+
+def main():
+    root = tkinter.Tk()
+    root.title("Draw Stars Menu")
+
+    main_frame = ttk.Frame(root, padding=20, relief='raised')
+    main_frame.grid()
+
+    Label1 = ttk.Label(main_frame, text="Progress of Robot:")
+    Label1.grid(row=0, column=0, columnspan=2)
+
+    button_message = ttk.Label(main_frame, text="---")
+    button_message.grid(row=2, column=0, columnspan=2)
+
+    pc_delegate = MyDelegateOnThePc(button_message)
+    mqtt_client = com.MqttClient(pc_delegate)
+    mqtt_client.connect_to_ev3()
+
+
+main()
