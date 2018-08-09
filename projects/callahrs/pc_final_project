@@ -24,12 +24,23 @@ def main():
     label1 = ttk.Label(main_frame, text="Progress of Robot:")
     label1.grid(row=0, column=0, columnspan=2)
 
-    button_message = ttk.Label(main_frame, text="---")
-    button_message.grid(row=2, column=0, columnspan=2)
+    line_message = ttk.Label(main_frame, text="---")
+    line_message.grid(row=2, column=0, columnspan=2)
 
-    pc_delegate = MyDelegateOnThePc(button_message)
+    q_button = ttk.Button(main_frame, text="Quit")
+    q_button.grid(row=5, column=3)
+    q_button['command'] = (lambda: quit_program(mqtt_client))
+
+    pc_delegate = MyDelegateOnThePc(line_message)
     mqtt_client = com.MqttClient(pc_delegate)
     mqtt_client.connect_to_ev3()
+
+    root.mainloop()
+
+
+def quit_program(mqtt_client):
+    mqtt_client.close()
+    exit()
 
 
 main()
