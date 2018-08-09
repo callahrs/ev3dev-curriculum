@@ -227,3 +227,29 @@ class Snatch3r(object):
         print("Abandon ship!")
         self.drive_both_stop()
         return False
+
+    def drive_inches_star(self, length, speed):
+        left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        assert left_motor.connected
+        assert right_motor.connected
+        touch_sensor = ev3.TouchSensor()
+        assert touch_sensor.connected
+        pixy = ev3.Sensor(driver_name="pixy-lego")
+        assert pixy.connected
+        pixy.mode = "SIG2"
+        left_motor.reset()
+        right_motor.reset()
+        froze_state = False
+        left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
+        right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
+        while froze_state or ev3.Motor.STATE_RUNNING:
+            if touch_sensor.is_pressed:
+                froze_state = True
+                print("Touch Sensor")
+                froze_state = False
+            if pixy.value(3) > 0:
+                froze_state = True
+                print("Seeing Red")
+                froze_state = False
+            time.sleep(.1)
