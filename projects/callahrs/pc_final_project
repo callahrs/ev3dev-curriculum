@@ -57,7 +57,7 @@ def main():
 
     draw_button = ttk.Button(main_frame, text="Draw")
     draw_button.grid(row=5, column=2)
-    draw_button['command'] = (lambda: handle_draw(mqtt_client, main_frame, int(radius_entry.get()), int(points_entry.get()), int(speed_entry.get()), image_label))
+    draw_button['command'] = (lambda: handle_draw(mqtt_client, int(radius_entry.get()), int(points_entry.get()), int(speed_entry.get()), image_label))
 
     q_button = ttk.Button(main_frame, text="Quit")
     q_button.grid(row=5, column=3)
@@ -75,14 +75,42 @@ def quit_program(mqtt_client):
     exit()
 
 
-def handle_draw(mqtt_client, main_frame, radius, points, speed, image_label):
+def handle_draw(mqtt_client, radius, points, speed, image_label):
     if points <= 4:
         points = 4
         photo4 = PIL.ImageTk.PhotoImage(PIL.Image.open("4point.PNG"))
         image_label.configure(image=photo4)
         image_label.image = photo4
-
-    print("changed")
+        mqtt_client.send_message("draw_star", [radius, points, speed])
+    elif points == 5:
+        photo5 = PIL.ImageTk.PhotoImage(PIL.Image.open("5point.PNG"))
+        image_label.configure(image=photo5)
+        image_label.image = photo5
+        mqtt_client.send_message("draw_star", [radius, points, speed])
+    elif points == 6:
+        photo6 = PIL.ImageTk.PhotoImage(PIL.Image.open("6point.PNG"))
+        image_label.configure(image=photo6)
+        image_label.image = photo6
+        mqtt_client.send_message("draw_star", [radius, points, speed])
+    elif points == 7:
+        photo7 = PIL.ImageTk.PhotoImage(PIL.Image.open("7point.PNG"))
+        image_label.configure(image=photo7)
+        image_label.image = photo7
+        mqtt_client.send_message("draw_star", [radius, points, speed])
+    elif points == 8:
+        photo8 = PIL.ImageTk.PhotoImage(PIL.Image.open("8point.PNG"))
+        image_label.configure(image=photo8)
+        image_label.image = photo8
+        mqtt_client.send_message("draw_star", [radius, points, speed])
+    elif points >= 9:
+        points = 9
+        photo9 = PIL.ImageTk.PhotoImage(PIL.Image.open("9point.PNG"))
+        image_label.configure(image=photo9)
+        image_label.image = photo9
+        mqtt_client.send_message("draw_star", [radius, points, speed])
+    else:
+        print("Unexpected Value")
+        exit()
 
 
 main()
