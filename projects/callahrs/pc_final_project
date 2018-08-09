@@ -1,8 +1,6 @@
-import ev3dev.ev3 as ev3
-import time
-import math
 import tkinter
 from tkinter import ttk
+
 import mqtt_remote_method_calls as com
 
 
@@ -23,8 +21,8 @@ def main():
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
 
-    Label1 = ttk.Label(main_frame, text="Progress of Robot:")
-    Label1.grid(row=0, column=0, columnspan=2)
+    label1 = ttk.Label(main_frame, text="Progress of Robot:")
+    label1.grid(row=0, column=0, columnspan=2)
 
     button_message = ttk.Label(main_frame, text="---")
     button_message.grid(row=2, column=0, columnspan=2)
