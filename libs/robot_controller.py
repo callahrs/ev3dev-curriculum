@@ -160,6 +160,7 @@ class Snatch3r(object):
         while not touch_sensor.is_pressed:
             time.sleep(0.01)
         arm_motor.stop(stop_action="brake")
+        arm_motor.wait(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def arm_down(self):
@@ -249,11 +250,11 @@ class Snatch3r(object):
                 left_position = left_motor.position
                 right_position = right_motor.position
                 print("Touch Sensor")
-                self.arm_up().wait()
-                self.turn_degrees(180, speed).wait()
+                self.arm_up()
+                self.turn_degrees(180, speed)
                 ev3.Sound.speak("Stop Bugging Me").wait()
                 self.arm_down()
-                self.turn_degrees(-180, speed).wait()
+                self.turn_degrees(-180, speed)
                 left_motor.position = left_position
                 right_motor.position = right_position
                 left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
@@ -261,10 +262,12 @@ class Snatch3r(object):
             if pixy.value(3) > 0:
                 ev3.Sound.beep().wait()
                 while pixy.value(3) > 0:
-                    print("Seeing Red")
+                    print("Seeing Yellow")
                     self.drive_both_stop()
                     ev3.Sound.speak("I hate that Color").wait()
                     time.sleep(1)
                 left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
                 right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
-            time.sleep(.1)
+                time.sleep(.1)
+        left_motor.wait(ev3.Motor.STATE_RUNNING)
+        right_motor.wait(ev3.Motor.STATE_RUNNING)
