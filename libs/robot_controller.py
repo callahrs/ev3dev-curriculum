@@ -84,7 +84,6 @@ class Snatch3r(object):
                                    speed_sp=turn_speed)
         left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        ev3.Sound.beep().wait()
 
     def drive_time_forward(self, drive_time_sp, drive_speed_sp):
         left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
@@ -243,8 +242,7 @@ class Snatch3r(object):
         right_motor.reset()
         left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
         right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
-        print('Done start first move')
-        while ev3.Motor.STATE_RUNNING:
+        while left_motor.position < length * 360 / 4:
             if touch_sensor.is_pressed:
                 ev3.Sound.beep().wait()
                 self.drive_both_stop()
@@ -261,7 +259,6 @@ class Snatch3r(object):
                 left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
                 right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
             if pixy.value(3) > 0:
-                print('Stuck')
                 while pixy.value(3) > 0:
                     print("Seeing Yellow")
                     self.drive_both_stop()
