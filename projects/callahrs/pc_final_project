@@ -110,6 +110,7 @@ def handle_draw(mqtt_client, radius, points, speed, image_label):
         mqtt_client.send_message("draw_star", [radius, points, speed])
     else:
         print("Unexpected Value")
+        mqtt_client.close()
         exit()
 
 

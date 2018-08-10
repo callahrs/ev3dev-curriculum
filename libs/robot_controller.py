@@ -240,33 +240,31 @@ class Snatch3r(object):
         pixy.mode = "SIG2"
         left_motor.reset()
         right_motor.reset()
-        froze_state = False
         left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
         right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
-        while froze_state or ev3.Motor.STATE_RUNNING:
+        while ev3.Motor.STATE_RUNNING:
             if touch_sensor.is_pressed:
-                froze_state = True
+                ev3.Sound.beep().wait()
                 self.drive_both_stop()
                 left_position = left_motor.position
                 right_position = right_motor.position
                 print("Touch Sensor")
                 self.arm_up().wait()
-                self.turn_degrees(180, 400).wait()
+                self.turn_degrees(180, speed).wait()
                 ev3.Sound.speak("Stop Bugging Me").wait()
                 self.arm_down()
-                self.turn_degrees(-180, 400).wait()
+                self.turn_degrees(-180, speed).wait()
                 left_motor.position = left_position
                 right_motor.position = right_position
                 left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
                 right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
-                froze_state = False
             if pixy.value(3) > 0:
+                ev3.Sound.beep().wait()
                 while pixy.value(3) > 0:
-                    froze_state = True
                     print("Seeing Red")
                     self.drive_both_stop()
                     ev3.Sound.speak("I hate that Color").wait()
-                froze_state = False
+                    time.sleep(.01)
                 left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
                 right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
             time.sleep(.1)

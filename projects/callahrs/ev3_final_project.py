@@ -18,9 +18,9 @@ class MyDelegate(object):
             turn_angle = 360 - angle
             length_chord = 2 * radius * (math.sin(((180 - (2 * angle)) * (math.pi // 180)) // 2))
             for k in range(points):
-                robot.drive_inches_star(length_chord, speed)
+                robot.drive_inches_star(length_chord, speed).wait()
                 ev3.Sound.beep().wait()
-                robot.turn_degrees(turn_angle, speed)
+                robot.turn_degrees(turn_angle, speed).wait()
                 ev3.Sound.beep().wait()
                 self.count_done = self.count_done + 1
         elif points % 2 == 0:
@@ -28,13 +28,13 @@ class MyDelegate(object):
             turn_angle_inner = 360 - (360 // points)
             length_chord = radius
             for k in range(points):
-                robot.drive_inches_star(length_chord, speed)
+                robot.drive_inches_star(length_chord, speed).wait()
                 ev3.Sound.beep().wait()
-                robot.turn_degrees(turn_angle, speed)
+                robot.turn_degrees(turn_angle, speed).wait()
                 ev3.Sound.beep().wait()
-                robot.drive_inches_star(length_chord, speed)
+                robot.drive_inches_star(length_chord, speed).wait()
                 ev3.Sound.beep().wait()
-                robot.turn_degrees(turn_angle_inner, speed)
+                robot.turn_degrees(turn_angle_inner, speed).wait()
                 ev3.Sound.beep().wait()
                 self.count_done = self.count_done + 1
 
