@@ -12,8 +12,11 @@ class MyDelegate(object):
         self.count_done = 0
 
     def draw_star(self, radius, points, speed):
+        my_delegate = MyDelegate()
+        mqtt_client = com.MqttClient(my_delegate)
+        my_delegate.mqtt_client = mqtt_client
+        mqtt_client.connect_to_pc()
         robot = robo.Snatch3r()
-        robot.arm_calibration()
         if points % 2 == 1:
             angle = points // 180
             turn_angle = 360 - angle
@@ -24,20 +27,24 @@ class MyDelegate(object):
                 robot.turn_degrees(turn_angle, speed)
                 ev3.Sound.beep().wait()
                 self.count_done = self.count_done + 1
+                mqtt_client.send_message("lines_done", [my_delegate.count_done])
+            self.running = False
         elif points % 2 == 0:
             turn_angle = 180
-            turn_angle_inner = 360 - (360 // points)
+            turn_angle_inner = (360 // points)
             length_chord = radius
             for k in range(points):
                 robot.drive_inches_star(length_chord, speed)
                 ev3.Sound.beep().wait()
-                robot.turn_degrees(turn_angle, speed)
+                robot.turn_degrees(turn_angle_inner, speed)
                 ev3.Sound.beep().wait()
                 robot.drive_inches_star(length_chord, speed)
                 ev3.Sound.beep().wait()
-                robot.turn_degrees(turn_angle_inner, speed)
+                robot.turn_degrees(turn_angle, speed)
                 ev3.Sound.beep().wait()
                 self.count_done = self.count_done + 1
+                mqtt_client.send_message("lines_done", [my_delegate.count_done])
+            self.running = False
 
 
 def main():
@@ -45,6 +52,8 @@ def main():
     mqtt_client = com.MqttClient(my_delegate)
     my_delegate.mqtt_client = mqtt_client
     mqtt_client.connect_to_pc()
+    robot = robo.Snatch3r()
+    robot.arm_calibration()
     while my_delegate.running is True:
         mqtt_client.send_message("lines_done", [my_delegate.count_done])
         time.sleep(0.1)

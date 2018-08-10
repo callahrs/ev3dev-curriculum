@@ -138,7 +138,7 @@ class Snatch3r(object):
         assert arm_motor.connected
         touch_sensor = ev3.TouchSensor()
         assert touch_sensor.connected
-        arm_motor.run_forever(speed_sp=600)
+        arm_motor.run_forever(speed_sp=900)
         while not touch_sensor.is_pressed:
             time.sleep(0.01)
         arm_motor.stop(stop_action="brake")
