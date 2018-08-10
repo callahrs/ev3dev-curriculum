@@ -259,9 +259,9 @@ class Snatch3r(object):
                 right_motor.position = right_position
                 left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
                 right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
-            if pixy.value(3) > 0:
+            if pixy.value(3) > 10:
                 ev3.Sound.beep().wait()
-                while pixy.value(3) > 0:
+                while pixy.value(3) > 10:
                     print("Seeing Yellow")
                     self.drive_both_stop()
                     ev3.Sound.speak("I hate that Color").wait()
