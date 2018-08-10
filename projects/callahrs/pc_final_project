@@ -12,6 +12,7 @@ class MyDelegateOnThePc(object):
         self.display_completed = label_to_display_messages_in
 
     def lines_done(self, lines_completed):
+        print("Receiving " + str(lines_completed))
         message_to_display = "{} lines completed.".format(lines_completed)
         self.display_completed.configure(text=message_to_display)
 
