@@ -261,7 +261,12 @@ class Snatch3r(object):
                 right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
                 froze_state = False
             if pixy.value(3) > 0:
-                froze_state = True
-                print("Seeing Red")
+                while pixy.value(3) > 0:
+                    froze_state = True
+                    print("Seeing Red")
+                    self.drive_both_stop()
+                    ev3.Sound.speak("I hate that Color").wait()
                 froze_state = False
+                left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
+                right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
             time.sleep(.1)
