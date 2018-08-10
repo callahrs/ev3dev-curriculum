@@ -31,6 +31,7 @@ class MyDelegate(object):
             for k in range(points):
                 robot.drive_inches_star(length_chord, speed)
                 ev3.Sound.beep().wait()
+                print('Done Point 1')
                 robot.turn_degrees(turn_angle, speed)
                 ev3.Sound.beep().wait()
                 robot.drive_inches_star(length_chord, speed)

@@ -160,7 +160,7 @@ class Snatch3r(object):
         while not touch_sensor.is_pressed:
             time.sleep(0.01)
         arm_motor.stop(stop_action="brake")
-        arm_motor.wait(ev3.Motor.STATE_RUNNING)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
 
     def arm_down(self):
@@ -243,6 +243,7 @@ class Snatch3r(object):
         right_motor.reset()
         left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
         right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
+        print('Done start first move')
         while ev3.Motor.STATE_RUNNING:
             if touch_sensor.is_pressed:
                 ev3.Sound.beep().wait()
@@ -269,5 +270,5 @@ class Snatch3r(object):
                 left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
                 right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
                 time.sleep(.1)
-        left_motor.wait(ev3.Motor.STATE_RUNNING)
-        right_motor.wait(ev3.Motor.STATE_RUNNING)
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
