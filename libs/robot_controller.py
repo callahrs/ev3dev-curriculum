@@ -264,7 +264,7 @@ class Snatch3r(object):
                     print("Seeing Red")
                     self.drive_both_stop()
                     ev3.Sound.speak("I hate that Color").wait()
-                    time.sleep(.01)
+                    time.sleep(1)
                 left_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
                 right_motor.run_to_abs_pos(position_sp=length * 360 / 4, speed_sp=speed)
             time.sleep(.1)
