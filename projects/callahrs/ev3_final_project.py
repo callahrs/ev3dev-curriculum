@@ -46,7 +46,7 @@ class MyDelegate(object):
             angle = 180 // points
             print(angle)
             length_chord = 2 * radius * (math.sin(((180 - (2 * angle)) * math.pi / 180 / 2)))
-            turn_angle = 360 - angle
+            turn_angle = 180 - angle
             print(length_chord)
             for k in range(points):
                 robot.drive_inches_star(length_chord, speed)
